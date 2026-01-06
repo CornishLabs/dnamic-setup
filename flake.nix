@@ -21,7 +21,7 @@
       };
 
       aqctl-andor-wrapper = pkgs.writeShellApplication {
-        name = "aqctl_andor_emccd_wrapped";
+        name = "aqctl-andor-emccd-wrapped";
         runtimeInputs = [ pkgs.libxml2 ]; # The camera needs this
         text = ''
           set -euo pipefail
@@ -43,7 +43,8 @@
         name = "artiq-master-dev";
         buildInputs = [ 
           python-env
-          artiq-lab-tmux 
+          artiq-lab-tmux
+          aqctl-andor-wrapper
         ];
         shellHook = ''
           if [ -z "$SCRATCH_DIR" ]; then
