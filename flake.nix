@@ -20,6 +20,25 @@
         text = builtins.readFile ./src/artiq-lab-tmux.sh;
       };
 
+      aqctl-andor-wrapper = pkgs.writeShellApplication {
+        name = "aqctl_andor_emccd_wrapped";
+        runtimeInputs = [ pkgs.libxml2 ]; # The camera needs this
+        text = ''
+          set -euo pipefail
+
+          # Vendor lib (Andor so)
+          ANDOR_LIB=/usr/local/lib
+
+          # Nix-provided deps for those vendor libs
+          NIX_LIBS="${pkgs.lib.makeLibraryPath [ pkgs.libxml2 ]}"
+
+          export LD_LIBRARY_PATH="$ANDOR_LIB:$NIX_LIBS''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
+          # Use whichever python is first on PATH (your activated venv inside nix shell)
+          exec python -m dnamic_andor_host.aqctl_andor_emccd "$@"
+        '';
+      };
+
       artiq-master-dev = pkgs.mkShell {
         name = "artiq-master-dev";
         buildInputs = [ 
