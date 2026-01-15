@@ -1,5 +1,6 @@
-Nix flakes for Durham Neutral Atom and Molecule Improved Control
+[DEPRICATED] Nix flakes for Durham Neutral Atom and Molecule Improved Control
 ==========================================================
+THIS REPOSITORITY IS NO LONGER USED/UPDATED
 
 This repository contains derivations for deploying ARTIQ via the
 [Nix package manager](https://nixos.org/download/).
